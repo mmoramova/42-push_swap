@@ -6,16 +6,15 @@
 #    By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 21:02:36 by mmoramov          #+#    #+#              #
-#    Updated: 2023/01/07 21:15:41 by mmoramov         ###   ########.fr        #
+#    Updated: 2023/03/13 21:34:06 by mmoramov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-NAME = push_swap.a
+NAME = push_swap
 HEADER = push_swap.h
 C_FLAGS = -Wall -Wextra -Werror -MMD
 RM = rm -f
-SRC_LIBFT = libft/libft.a 
+SRC_LIBFT = libft/libft.a
 MAKE_LIBFT = make -C libft
 
 # Colors
@@ -37,7 +36,7 @@ DEP = $(SRC:.c=.d)
 
 all: make_libs $(NAME)
 
-make_libs: 
+make_libs:
 	@$(MAKE_LIBFT)
 
 -include ${DEP}
@@ -46,8 +45,7 @@ make_libs:
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME):: $(OBJ) ./$(SRC_LIBFT)
-	cp $(SRC_LIBFT) $(NAME)
-	ar -rcs $(NAME) $(OBJ)
+	$(CC) $(C_FLAGS) $(^) -o $(NAME)
 	@echo "$(BLUE)Everything has been compilated.$(BLACK)"
 
 $(NAME)::
@@ -63,6 +61,6 @@ fclean: clean
 	$(RM) $(NAME)
 	$(MAKE_LIBFT) fclean
 	@echo "$(MAGENTA)Everything has been cleaned.$(BLACK)"
-	
+
 re: fclean all
 
