@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/03/15 20:25:06 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:32:55 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,29 @@ int ft_fill_stack(int argc, t_stack *a)
 	return(0);
 }
 */
+
+void ft_print_log(t_stack *a, t_stack *b)
+{
+		printf("Changes: \n");
+		if (a && a->length > 0)
+		{
+			printf("Size of set a is %d \n", a->length);
+			printf("First value of set a is %d \n", a->first->value);
+			if (a->length > 1)
+				printf("Second value of set a is %d \n", a->first->next->value);
+			printf("Last value of set a is %d \n\n", a->last->value);
+		}
+
+		if (b && b->length > 0)
+		{
+			printf("Size of set b is %d \n", b->length);
+			printf("First value of set b is %d \n", b->first->value);
+			if(b->length > 1)
+				printf("Second value of set b is %d \n", b->first->next->value);
+			printf("Last value of set b is %d \n\n", b->last->value);
+		}
+}
+
 t_piece	*ft_lstpnew(int content)
 {
 	t_piece	*lst;
@@ -32,19 +55,6 @@ t_piece	*ft_lstpnew(int content)
 	lst -> value = content;
 	lst -> index = 0;
 	lst -> next = NULL;
-	return (lst);
-}
-
-t_stack	*ft_lstsnew()
-{
-	t_stack	*lst;
-
-	lst = (t_stack *) malloc(sizeof(t_stack));
-	if (!lst)
-		return (NULL);
-	lst -> length = 0;
-	lst -> first = NULL;
-	lst -> last = NULL;
 	return (lst);
 }
 
@@ -89,27 +99,38 @@ void	ft_lstpadd_back(t_piece **lst, t_piece *new)
 		*lst = new;
 }
 
-void ft_moves_swap(t_piece *lst)
+void ft_moves_swap(t_stack *a, int i)
 {
 	int temp_value;
 	
-	if (lst && lst->next)
+	if (a && a->first->next)
 	{
-		temp_value = lst->value;
-		lst->value = lst->next->value;
-		lst->next->value = temp_value;
-		//write sa/sb;
-	}
+		temp_value = a->first->value;
+		a->first->value = a->first->next->value;
+		a->first->next->value = temp_value;
+		
+		if (i == 1)
+		{
+			ft_putstr_fd("sa\n",1);
+			ft_print_log(a, NULL);
+		}
+		if (i == 2)
+		{	
+			ft_putstr_fd("sb\n",1);
+			ft_print_log(NULL,a);
+		}
+	} 
 }
 
-void ft_moves_swap_both(t_piece *a, t_piece *b)
+void ft_moves_swap_both(t_stack *a, t_stack *b)
 {
-	ft_moves_swap(a);
-	ft_moves_swap(b);
-	//write ss;
+	ft_moves_swap(a,0);
+	ft_moves_swap(b,0);
+	ft_putstr_fd("ss\n",1);
+	ft_print_log(a,b);
 }
 
-void ft_moves_push(t_stack *a, t_stack *b)
+void ft_moves_push(t_stack *a, t_stack *b, int i)
 {
 	t_piece *current;
 
@@ -126,21 +147,21 @@ void ft_moves_push(t_stack *a, t_stack *b)
 
 		a->length -= 1;
 		b->length += 1;
-
-		printf("Changes after pa\n");
-		printf("Size of set a is %d \n", a->length);
-		printf("First value of set a is %d \n", a->first->value);
-		printf("Second value of set a is %d \n", a->first->next->value);
-		printf("Last value of set a is %d \n\n", a->last->value);
-	
-		printf("Size of set b is %d \n", b->length);
-		printf("First value of set b is %d \n", b->first->value);
-		//printf("Second value of set b is %d \n", b->first->next->value);
-		printf("Last value of set b is %d \n\n", b->last->value);
+		
+		if (i == 1)
+		{
+			ft_putstr_fd("pa\n",1);
+			ft_print_log(a,b);
+		}
+		if (i == 2)
+		{
+			ft_putstr_fd("pb\n",1);
+			ft_print_log(b,a);
+		}
 	}
 }
 
-void ft_moves_rotate(t_stack *a)
+void ft_moves_rotate(t_stack *a, int i)
 {
 	t_piece *current;
 
@@ -152,17 +173,21 @@ void ft_moves_rotate(t_stack *a)
 		a->first = current->next;
 		current->next = NULL;
 		a->last = ft_lstplast(a->first);
-		
-		printf("Changes after rr\n");
-		printf("Size of set a is %d \n", a->length);
-		printf("First value of set a is %d \n", a->first->value);
-		printf("Second value of set a is %d \n", a->first->next->value);
-		printf("Last value of set a is %d \n\n", a->last->value);
-		//write ra/rb
+				
+		if (i == 1)
+		{
+			ft_putstr_fd("ra\n",1);
+			ft_print_log(a, NULL);
+		}
+		if (i == 2)
+		{
+			ft_putstr_fd("rb\n",1);
+			ft_print_log(NULL,a);
+		}
 	}
 }
 
-void ft_moves_rev_rotate(t_stack *a)
+void ft_moves_rev_rotate(t_stack *a, int i)
 {
 	t_piece *beforelast;
 
@@ -176,29 +201,33 @@ void ft_moves_rev_rotate(t_stack *a)
 		beforelast->next = NULL;
 		a->last = beforelast;
 
-		printf("Changes after reverse rr\n");
-		printf("Size of set a is %d \n", a->length);
-		printf("First value of set a is %d \n", a->first->value);
-		printf("Second value of set a is %d \n", a->first->next->value);
-		printf("Last value of set a is %d \n\n", a->last->value);
-		//write rra/rrb
+		if (i == 1)
+		{
+			ft_putstr_fd("rra\n",1);
+			ft_print_log(a, NULL);
+		}
+		if (i == 2)
+		{
+			ft_putstr_fd("rrb\n",1);
+			ft_print_log(NULL,a);
+		}
 	}
 }
 
 void ft_moves_rotate_both(t_stack *a, t_stack *b)
 {
-	ft_moves_rotate(a);
-	ft_moves_rotate(b);
-	//write rr;
+	ft_moves_rotate(a,0);
+	ft_moves_rotate(b,0);
+	ft_putstr_fd("rr\n",1);
 }
 
 void ft_moves_rev_rotate_both(t_stack *a, t_stack *b)
 {
-	ft_moves_rev_rotate(a);
-	ft_moves_rev_rotate(b);
-	//write rrr;
+	ft_moves_rev_rotate(a,0);
+	ft_moves_rev_rotate(b,0);
+	ft_putstr_fd("rrr\n",1);
 }
-
+	
 /*
 void	ft_lstpiter(t_piece *lst, void (*f)(void *))
 {
@@ -232,19 +261,43 @@ t_piece	*ft_lstpmap(t_piece *lst, void *(*f)(void *), void (*del)(void *))
 	return (new);
 }*/
 
+void ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
+{
+	t_piece	*current;
+	t_piece	*a;
+	int		i;
+	
+	i = 1;
+	a = NULL;
+
+	while (i < argc)
+		{
+			printf("number is %s \n", argv[i]);
+
+			current = ft_lstpnew(ft_atoi(argv[i]));
+			printf("Current added number is %d \n", current->value);
+
+			ft_lstpadd_back(&a, current);
+			printf("Length of the stack is %d \n\n", ft_lstpsize(a));
+			i++;
+		}
+
+		a_stack->first = a;
+		a_stack->last = ft_lstplast(a);
+		a_stack->length = ft_lstpsize(a);
+
+		b_stack -> first = NULL;
+		b_stack -> last = NULL;
+		b_stack -> length = 0;
+		
+		ft_print_log(a_stack,b_stack);
+}
+
 int main(int argc, char **argv)
 {
     int i;
-    t_stack *a_stack;
-    t_stack *b_stack;
-	t_piece *a;
-	t_piece *b;
-	t_piece *current;
-
-    a = NULL; //delete
-	b = NULL;
-	a_stack = NULL;
-	b_stack = NULL;
+    t_stack a_stack;
+    t_stack b_stack;
 
     i = 1;
 
@@ -253,57 +306,23 @@ int main(int argc, char **argv)
     if (argc > 1)
     {
         // check correct input
-		//ft_check_input(*argv);
+		//ft_check_input(argv);
 
-        //fill a
-		while (i < argc)
-		{
-			//continue;
-			printf("number is %s \n", argv[i]);
-			
-			current = ft_lstpnew(ft_atoi(argv[i]));
-			printf("Current added number is %d \n", current->value);
-			
-			ft_lstpadd_back(&a, current);
-			printf("Length of the stack is %d \n\n", ft_lstpsize(a));
-			i++;
-		}
-		a_stack = ft_lstsnew();
-		a_stack->length = ft_lstpsize(a);
-		a_stack->first = a;
-		a_stack->last = ft_lstplast(a);
+		ft_stack_init(argc, argv, &a_stack, &b_stack);
+		//check dup
+		//ft_check_dup(&a_stack);
 
-		b_stack = ft_lstsnew();
+		ft_moves_swap(&a_stack, 1);    
+	
+		ft_moves_push(&a_stack, &b_stack, 1);
+		ft_moves_push(&a_stack, &b_stack, 1);
 
-		printf("Size of set a is %d \n", a_stack->length);
-		printf("First value of set a is %d \n", a_stack->first->value);
-		printf("Second value of set a is %d \n", a_stack->first->next->value);
-		printf("Last value of set a is %d \n\n", a_stack->last->value);
+		ft_moves_swap_both(&a_stack, &b_stack);
 
-        // sort
-		// sa
-		ft_moves_swap(a);
+		ft_moves_rotate(&a_stack, 1);
 
-		printf("Changes after sa\n");
-		printf("Size of set a is %d \n", a_stack->length);
-		printf("First value of set a is %d \n", a_stack->first->value);
-		printf("Second value of set a is %d \n", a_stack->first->next->value);
-		printf("Last value of set a is %d \n\n", a_stack->last->value);
-    
-		ft_moves_swap_both(a, b);
-
-		printf("Changes after ss\n");
-		printf("Size of set a is %d \n", a_stack->length);
-		printf("First value of set a is %d \n", a_stack->first->value);
-		printf("Second value of set a is %d \n", a_stack->first->next->value);
-		printf("Last value of set a is %d\n\n", a_stack->last->value);
-
-		ft_moves_push(a_stack, b_stack);
-
-		ft_moves_rotate(a_stack);
-
-		ft_moves_rev_rotate(a_stack);
+		ft_moves_rev_rotate(&a_stack, 2);
 	}
-    //gcc push_swap.c push_swap.a && ./a.out 4 5 7 5
+
     return(0);
 }
