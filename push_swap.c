@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/03/18 13:32:55 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:14:52 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_piece	*ft_lstpnew(int content)
 	if (!lst)
 		return (NULL);
 	lst -> value = content;
-	lst -> index = 0;
+	lst -> index = content; //todo
 	lst -> next = NULL;
 	return (lst);
 }
@@ -108,6 +108,10 @@ void ft_moves_swap(t_stack *a, int i)
 		temp_value = a->first->value;
 		a->first->value = a->first->next->value;
 		a->first->next->value = temp_value;
+
+		temp_value = a->first->index;
+		a->first->index = a->first->next->index;
+		a->first->next->index = temp_value;
 		
 		if (i == 1)
 		{
@@ -289,8 +293,30 @@ void ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 		b_stack -> first = NULL;
 		b_stack -> last = NULL;
 		b_stack -> length = 0;
-		
+
 		ft_print_log(a_stack,b_stack);
+}
+
+int ft_checks_dup(t_stack *a_stack)
+{
+	t_piece *lst;
+	t_piece *current;
+
+	current = a_stack->first;
+	lst = current;
+
+	while(current && current->next)
+	{
+		lst = current->next;	
+		while (lst)
+		{
+			if (current->value == lst->value)
+				return(1);
+			lst = lst->next;
+		}
+		current = current->next;
+	}
+	return(0);
 }
 
 int main(int argc, char **argv)
@@ -306,11 +332,16 @@ int main(int argc, char **argv)
     if (argc > 1)
     {
         // check correct input
-		//ft_check_input(argv);
+		//ft_checks_input(argv);
 
 		ft_stack_init(argc, argv, &a_stack, &b_stack);
 		//check dup
-		//ft_check_dup(&a_stack);
+		if (ft_checks_dup(&a_stack) == 1)
+		{
+			ft_putstr_fd("Error - dupl\n",1);
+			//free;
+			return(1);
+		}
 
 		ft_moves_swap(&a_stack, 1);    
 	
@@ -322,6 +353,31 @@ int main(int argc, char **argv)
 		ft_moves_rotate(&a_stack, 1);
 
 		ft_moves_rev_rotate(&a_stack, 2);
+
+		/* LIST
+		sa
+			ft_moves_swap(&a_stack, 1);
+		sb
+			ft_moves_swap(&b_stack, 2);
+		ss
+			ft_moves_swap_both(&a_stack, &b_stack);
+		pa
+			ft_moves_push(&a_stack, &b_stack);
+		pb
+			ft_moves_push(&b_stack, &a_stack);
+		ra
+			ft_moves_rotate(&a_stack, 1);
+		rb
+			ft_moves_rotate(&b_stack, 2);
+		rr		
+			ft_moves_rotate_both(&a_stack, &b_stack);
+		ra
+			ft_moves_rev_rotate(&a_stack, 1);
+		rb
+			ft_moves_rev_rotate(&b_stack, 2);
+		rrr	
+			ft_moves_rev_rotate_both(&a_stack, &b_stack);		
+		*/
 	}
 
     return(0);
