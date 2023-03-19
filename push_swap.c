@@ -6,18 +6,13 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/03/18 15:14:52 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/03/19 19:00:16 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*int ft_check_input(char *argv)
-{
-	return(0);
-}
-
-int ft_fill_stack(int argc, t_stack *a)
 {
 	return(0);
 }
@@ -53,7 +48,7 @@ t_piece	*ft_lstpnew(int content)
 	if (!lst)
 		return (NULL);
 	lst -> value = content;
-	lst -> index = content; //todo
+	lst -> index = 0; 
 	lst -> next = NULL;
 	return (lst);
 }
@@ -265,7 +260,23 @@ t_piece	*ft_lstpmap(t_piece *lst, void *(*f)(void *), void (*del)(void *))
 	return (new);
 }*/
 
-void ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
+int ft_isnumber(char *str)
+{
+	int i;
+
+	i = 0;
+	if ((str[i] == '-' || str[i] == '+') && str[i+1])
+		i++;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return(0);	
+		i++;
+	}
+	return(1);
+}
+
+int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 {
 	t_piece	*current;
 	t_piece	*a;
@@ -276,14 +287,16 @@ void ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 
 	while (i < argc)
 		{
-			printf("number is %s \n", argv[i]);
+			if (ft_isnumber(argv[i]) == 0)
+				return(1);
 
 			current = ft_lstpnew(ft_atoi(argv[i]));
-			printf("Current added number is %d \n", current->value);
-
 			ft_lstpadd_back(&a, current);
-			printf("Length of the stack is %d \n\n", ft_lstpsize(a));
 			i++;
+
+			printf("number is %s \n", argv[i-1]);
+			printf("Current added number is %d \n", current->value);
+			printf("Length of the stack is %d \n\n", ft_lstpsize(a));
 		}
 
 		a_stack->first = a;
@@ -295,6 +308,34 @@ void ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 		b_stack -> length = 0;
 
 		ft_print_log(a_stack,b_stack);
+	return(0);
+}
+
+void ft_stack_init_addindex(t_stack *a_stack)
+{
+	int		i;
+	t_piece	*current;
+	t_piece *a;
+	int		count;
+
+	i = 0;
+	current = a_stack->first;
+
+	while (i < a_stack->length)
+	{
+		a = a_stack->first;
+		count = 1;
+		while(a)
+		{
+			if (current -> value > a -> value)
+				count++;
+			a = a ->next;
+		}
+		
+		current -> index = count;	
+		current = current->next;
+		i++;
+	}
 }
 
 int ft_checks_dup(t_stack *a_stack)
@@ -327,6 +368,7 @@ int main(int argc, char **argv)
 
     i = 1;
 
+
     //if (argc == 1)
       //  ft_putstr_fd("Error\n", 1);
     if (argc > 1)
@@ -334,8 +376,13 @@ int main(int argc, char **argv)
         // check correct input
 		//ft_checks_input(argv);
 
-		ft_stack_init(argc, argv, &a_stack, &b_stack);
-		//check dup
+		if(ft_stack_init(argc, argv, &a_stack, &b_stack) == 1)
+		{
+			ft_putstr_fd("Error - init, nonnbr", 1);
+			//free
+			return(1);
+		}
+
 		if (ft_checks_dup(&a_stack) == 1)
 		{
 			ft_putstr_fd("Error - dupl\n",1);
@@ -343,6 +390,8 @@ int main(int argc, char **argv)
 			return(1);
 		}
 
+		ft_stack_init_addindex(&a_stack)
+		
 		ft_moves_swap(&a_stack, 1);    
 	
 		ft_moves_push(&a_stack, &b_stack, 1);
