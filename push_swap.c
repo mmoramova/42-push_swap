@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/03/19 19:00:16 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/03/21 19:01:20 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,8 +330,7 @@ void ft_stack_init_addindex(t_stack *a_stack)
 			if (current -> value > a -> value)
 				count++;
 			a = a ->next;
-		}
-		
+		}	
 		current -> index = count;	
 		current = current->next;
 		i++;
@@ -360,6 +359,35 @@ int ft_checks_dup(t_stack *a_stack)
 	return(0);
 }
 
+int ft_check_issorted(t_stack *a_stack, t_stack *b_stack)
+{
+	t_piece *current;
+
+	current = a_stack->first;
+
+	if (b_stack->length != 0)
+		return(0);
+	while(current && current->next)
+	{
+		if (current->index > current->next->index)
+				return(0);
+		current = current->next;
+	}
+	return(1);
+}
+
+void ft_sort_two(t_stack *a_stack, t_stack *b_stack) 
+{
+	//if (ft_check_issorted(a_stack,b_stack) == 0)
+	ft_moves_swap(a_stack, 1);
+}
+
+void ft_sort_three(t_stack *a_stack, t_stack *b_stack)
+{
+	//if (ft_check_issorted(a_stack,b_stack) == 0)
+	ft_moves_swap(a_stack, 1);
+}
+
 int main(int argc, char **argv)
 {
     int i;
@@ -367,7 +395,6 @@ int main(int argc, char **argv)
     t_stack b_stack;
 
     i = 1;
-
 
     //if (argc == 1)
       //  ft_putstr_fd("Error\n", 1);
@@ -390,8 +417,20 @@ int main(int argc, char **argv)
 			return(1);
 		}
 
-		ft_stack_init_addindex(&a_stack)
+		ft_stack_init_addindex(&a_stack);
 		
+		if (ft_check_issorted(&a_stack,&b_stack) == 1)
+		{
+			//free;
+			return(1);
+		}
+		else if (a_stack.length == 2)
+			ft_sort_two(&a_stack, &b_stack);
+		else if (a_stacl.length == 3)
+			ft_sort_three(&a_stack, &b_stack);
+
+		return(0);
+
 		ft_moves_swap(&a_stack, 1);    
 	
 		ft_moves_push(&a_stack, &b_stack, 1);
