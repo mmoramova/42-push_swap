@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/03/21 19:01:20 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:43:38 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,14 +378,36 @@ int ft_check_issorted(t_stack *a_stack, t_stack *b_stack)
 
 void ft_sort_two(t_stack *a_stack, t_stack *b_stack) 
 {
-	//if (ft_check_issorted(a_stack,b_stack) == 0)
-	ft_moves_swap(a_stack, 1);
+	if (ft_check_issorted(a_stack,b_stack) == 0)
+		ft_moves_swap(a_stack, 1);
 }
 
 void ft_sort_three(t_stack *a_stack, t_stack *b_stack)
 {
-	//if (ft_check_issorted(a_stack,b_stack) == 0)
-	ft_moves_swap(a_stack, 1);
+	t_piece *first;
+	
+	first = a_stack->first;
+	printf("before sort three: %d|%d|%d\n\n", first->index,first->next->index,first->next->next->index);
+	if (ft_check_issorted(a_stack,b_stack) == 0 && a_stack->length == 3)
+	{
+		if(first->index > first->next->index && first->index > first->next->next->index)
+		{
+			ft_moves_rotate(a_stack,1);
+			first = a_stack->first;
+			printf("after ra: %d|%d|%d\n\n", first->index,first->next->index,first->next->next->index);
+		}
+		else if (first->next->index > first->next->next->index)
+		{
+			ft_moves_rev_rotate(a_stack,1);
+			first = a_stack->first;
+			printf("after rra: %d|%d|%d\n\n", first->index,first->next->index,first->next->next->index);
+		}
+		if (first->index > first->next->index)
+		{	
+			ft_moves_swap(a_stack, 1);
+			printf("after ss: %d|%d|%d\n\n", first->index,first->next->index,first->next->next->index);
+		}
+	}
 }
 
 int main(int argc, char **argv)
@@ -426,13 +448,15 @@ int main(int argc, char **argv)
 		}
 		else if (a_stack.length == 2)
 			ft_sort_two(&a_stack, &b_stack);
-		else if (a_stacl.length == 3)
+		else if (a_stack.length == 3)
 			ft_sort_three(&a_stack, &b_stack);
 
 		return(0);
 
+		ft_moves_rotate(&a_stack,1);
 		ft_moves_swap(&a_stack, 1);    
-	
+		
+		return(0);
 		ft_moves_push(&a_stack, &b_stack, 1);
 		ft_moves_push(&a_stack, &b_stack, 1);
 
