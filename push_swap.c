@@ -6,52 +6,20 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/10 18:10:51 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/12 22:01:11 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*int ft_check_input(char *argv)
+int ft_nbrmax(int a, int b)
 {
-	return(0);
-}
-*/
-
-void ft_print_log(t_stack *a, t_stack *b)
-{
-		printf("\nChanges: \n A: ");
-		
-        int len;
-        t_piece *current;
-        
-         if (a)
-         {
-            current = a->first;
-            len = a->length;
-
-            while (a && len--)
-            {
-                printf("%d ", current->value);
-                current = current->next;
-            }
-        }
-
-        printf("\n B: ");
-        
-        if (!b)
-            return;
-        current = b->first;
-        len = b->length;
-
-        while (b && len--)
-		{
-			printf("%d ", current->value);
-            current = current->next;
-		}
+   if (a > b)
+    return (a);
+   return(b);
 }
 
-int ft_isnumber(char *str)
+int ft_check_input(char *str)
 {
 	int i;
 
@@ -78,7 +46,7 @@ int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 
 	while (i < argc)
 		{
-			if (ft_isnumber(argv[i]) == 0)
+			if (ft_check_input(argv[i]) == 0)
 				return(1);
 
 			current = ft_lstpnew(ft_atoi(argv[i]));
@@ -94,7 +62,6 @@ int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 		b_stack -> last = NULL;
 		b_stack -> length = 0;
 
-		ft_print_log(a_stack,b_stack);
 	return(0);
 }
 
@@ -207,15 +174,20 @@ int ft_count_moves_a(t_stack *a_stack, int nbr)
     int position;
     t_piece *current;
 
-    position = 0;
+    position = 1;
     current = a_stack->first;
 
-    while (current && current->index != nbr)
+    if (nbr < ft_lst_value_min(a_stack) || nbr > ft_lst_value_max(a_stack))
+        return(ft_find_positon(a_stack, ft_lst_value_min(a_stack)));
+    while (current && current->next && (current->index > nbr || current->next->index < nbr))
     {
         current = current->next;
         position++;
-    }
-    return(position);
+     }
+    
+    if (a_stack->length == position)
+        return(0);
+    return (position);
 }
 
 int ft_count_moves_b(t_stack *b_stack, int nbr)
@@ -239,69 +211,220 @@ int ft_count_moves_b(t_stack *b_stack, int nbr)
     return (position);
 }
 
-void ft_sort(t_stack *a_stack, t_stack *b_stack)
+int ft_find_opt_moves(int ra, int rb, int rra, int rrb)
 {
-    //1. prve dve dam pb
-    // CYKLUS dokym nemam zoradene alebo neostali 3ks
-    //1. v stack A pridelim vsade 0
-    //2. pridelim vsetkym z A vypocet krokov ako ra + rb + 1x pb
-    //3. vyberiem si to cislo kde je najmenenej krokov
-    //4. prevediem dane kroky tj x krat ra a x krat rb a pb
-    //5. skontrolujem ci prebehlo
-    //6. znova
+    int moves;
 
-    int i;
+    moves = ra + rrb;
+    if (moves >(rb + rra))
+        moves = rb + rra;
+    if (moves > ft_nbrmax(ra, rb))
+        moves = ft_nbrmax(ra, rb);
+    if (moves > ft_nbrmax(rra, rrb))
+        moves = ft_nbrmax(rra, rrb);
+    return(moves);
+}
+
+int ft_count_moves(t_stack *a_stack, t_stack *b_stack, int nbr, int i)
+{
+    int moves;
+    int ra;
+    int rb;
+
+    if (i ==1)
+    {
+        ra = ft_find_positon(a_stack, nbr);
+        rb = ft_count_moves_b(b_stack, nbr);
+    }
+    else
+    {
+        ra = ft_count_moves_a(a_stack, nbr);
+        rb = ft_find_positon(b_stack, nbr);
+    }
+    moves = ft_find_opt_moves(ra, rb, a_stack->length-ra, b_stack->length-rb);
+    return (moves);
+}
+
+void ft_sort_ra_rrb(t_stack *a_stack, t_stack *b_stack, int ra, int rrb)
+{
+    while(rrb > 0)
+    {
+		ft_moves_rev_rotate(b_stack, 2);
+        rrb--;
+    }
+    while(ra > 0)
+    {
+        ft_moves_rotate(a_stack, 1);
+        ra--;
+    }
+}
+
+void ft_sort_rb_rra(t_stack *a_stack, t_stack *b_stack, int rb, int rra)
+{
+    while(rra > 0)
+    {
+		ft_moves_rev_rotate(a_stack, 1);
+        rra--;
+    }
+    while(rb > 0)
+    {
+        ft_moves_rotate(b_stack, 2);
+        rb--;
+    }
+}
+
+void ft_sort_ra_rb(t_stack *a_stack, t_stack *b_stack, int ra, int rb)
+{
+    if (ra > rb)
+    {
+        while(rb > 0)
+        {
+            ft_moves_rotate_both(a_stack, b_stack);
+            ra--;
+            rb--;
+        }
+        while(ra > 0)
+        {
+            ft_moves_rotate(a_stack, 1);
+            ra--;
+        }
+    }
+    else
+    {
+        while(ra > 0)
+        {
+            ft_moves_rotate_both(a_stack, b_stack);
+            ra--;
+            rb--;
+        }
+        while(rb > 0)
+        {
+            ft_moves_rotate(b_stack, 2);
+            rb--;
+        }
+    }
+}
+
+void ft_sort_rra_rrb(t_stack *a_stack, t_stack *b_stack, int rra, int rrb)
+{
+    if (rra > rrb)
+    {
+        while(rrb > 0)
+        {
+            ft_moves_rev_rotate_both(a_stack, b_stack);
+            rra--;
+            rrb--;
+        }
+        while(rra > 0)
+        {
+            ft_moves_rev_rotate(a_stack, 1);
+            rra--;
+        }
+    }
+    else
+    {
+        while(rra > 0)
+        {
+            ft_moves_rev_rotate_both(a_stack, b_stack);
+            rra--;
+            rrb--;
+        }
+        while(rrb > 0)
+        {
+            ft_moves_rev_rotate(b_stack, 2);
+            rrb--;
+        }
+    }
+}
+
+void ft_sort_a_to_b(t_stack *a_stack, t_stack *b_stack)
+{
+    int moves;
     int value;
-    //int len;
-    //t_piece *current;
+    int ra;
+    int rb;
+
+    ft_lst_fill_numop(a_stack, b_stack, 1);
+    value = ft_lst_value_numopmin(a_stack);
+        
+    ra = ft_find_positon(a_stack, value);
+    rb = ft_count_moves_b(b_stack, value);
+    moves = ft_find_opt_moves(ra, rb, a_stack->length-ra, b_stack->length-rb);
+    
+    if (moves == ra + b_stack->length-rb)
+        ft_sort_ra_rrb(a_stack, b_stack, ra, b_stack->length-rb);
+    else if (moves == (rb + a_stack->length-ra))
+        ft_sort_rb_rra(a_stack, b_stack, rb, a_stack->length-ra);
+    else if (moves == ft_nbrmax(ra, rb))
+        ft_sort_ra_rb(a_stack, b_stack, ra, rb);
+    else if (moves == ft_nbrmax(a_stack->length-ra, b_stack->length-rb))
+        ft_sort_rra_rrb(a_stack, b_stack, a_stack->length-ra, b_stack->length-rb);             
+    ft_moves_push(a_stack, b_stack, 2);
+}
+
+void ft_sort_b_to_a(t_stack *a_stack, t_stack *b_stack)
+{
+    int moves;
+    int value;
+    int ra;
+    int rb;
+
+    ft_lst_fill_numop(b_stack, a_stack, 2);
+    value = ft_lst_value_numopmin(b_stack);
+
+    ra = ft_count_moves_a(a_stack, value);
+    rb = ft_find_positon(b_stack, value);
+    moves = ft_find_opt_moves(ra, rb, a_stack->length-ra, b_stack->length-rb);
+   
+    if (moves == ra + b_stack->length-rb)
+        ft_sort_ra_rrb(a_stack, b_stack, ra, b_stack->length-rb);
+    else if (moves == (rb + a_stack->length-ra))
+        ft_sort_rb_rra(a_stack, b_stack, rb, a_stack->length-ra);
+    else if (moves == ft_nbrmax(ra, rb))
+        ft_sort_ra_rb(a_stack, b_stack, ra, rb);
+    else if (moves == ft_nbrmax(a_stack->length-ra, b_stack->length-rb))
+        ft_sort_rra_rrb(a_stack, b_stack, a_stack->length-ra, b_stack->length-rb);             
+    ft_moves_push(b_stack, a_stack, 1);
+}
+
+void    ft_lst_fill_numop(t_stack *a_stack, t_stack *b_stack, int i)
+{
     t_piece *a;
     
-    a = a_stack->first;
-    i = 0;
+    a = a_stack->first;    
+    while (a)
+    {
+        a->numop = ft_count_moves(a_stack,b_stack,a->index, i) + 1;
+        a = a -> next;
+    }
+}
+
+void ft_sort(t_stack *a_stack, t_stack *b_stack)
+{
+    int value;
     value = 0;
 
+    if (a_stack->length == 2)
+			ft_sort_two(a_stack, b_stack);     
     if (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
         ft_moves_push(a_stack, b_stack, 2);
     if (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
         ft_moves_push(a_stack, b_stack, 2);
 
     while (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
-    {
-        a = a_stack->first;
-        i = 0;
-        
-        while (a)
-        {
-            a->numop = ft_count_moves_a(a_stack,a->index) + ft_count_moves_b(b_stack,a->index) + 1;
-            a = a -> next;
-        }
-            
-        /*current = a_stack->first;
-        len = a_stack->length;
-
-        while (a_stack && len--)
-        {
-            printf("\n|%d-%d|", current->value, current->numop);
-            current = current->next;
-        }
-        */
-        value = ft_lst_value_numopmin(a_stack);
-        
-        i = ft_count_moves_a(a_stack,value);
-        while (i-- > 0)
-            ft_moves_rotate(a_stack, 1);
-
-        i = ft_count_moves_b(b_stack,value);
-        while (i-- > 0)
-            ft_moves_rotate(b_stack, 2);
-        ft_moves_push(a_stack, b_stack, 2);
-
-
-    }
+       ft_sort_a_to_b(a_stack, b_stack);
     if (a_stack->length == 3)
 		ft_sort_three(a_stack, b_stack);
-    ft_print_log(a_stack,b_stack);
-    return;
+    while (ft_check_issorted(a_stack,b_stack) != 1 && b_stack->length != 0)
+       ft_sort_b_to_a(a_stack, b_stack);
+   while (ft_check_issorted(a_stack,b_stack) != 1)
+   {
+         if (ft_find_positon(a_stack, ft_lst_value_min(a_stack)) < a_stack->length/2)
+            ft_moves_rotate(a_stack, 1);
+        else
+            ft_moves_rev_rotate(a_stack, 1);
+   }
+   return;
 }
 
 int main(int argc, char **argv)
@@ -340,13 +463,7 @@ int main(int argc, char **argv)
 			//free;
 			return(1);
 		}
-		else if (a_stack.length == 2)
-			ft_sort_two(&a_stack, &b_stack);
-		else if (a_stack.length == 3)
-			ft_sort_three(&a_stack, &b_stack);
-        else
-            ft_sort(&a_stack, &b_stack);
-        
+		ft_sort(&a_stack, &b_stack);    
 		return(0);
 
 		/* LIST

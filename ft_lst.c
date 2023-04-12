@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:42:43 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/10 17:36:51 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:19:19 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int ft_lst_value_numopmin(t_stack *a_stack)
     value = current->index;
     numop = current->numop;
 
-    while (current)
+  while (current)
     {
         if(current->numop < numop)
         {

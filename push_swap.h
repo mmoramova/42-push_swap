@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:00:14 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/10 17:35:30 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/12 21:50:20 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ typedef struct s_stack
 	struct s_piece	*last;
 }	t_stack;
 
-void ft_print_log(t_stack *a, t_stack *b);
+/*LISTS*/
 t_piece	*ft_lstpnew(int content);
-int	ft_lstpsize(t_piece *lst);
-void	ft_lstpadd_front(t_piece **lst, t_piece *new);
 t_piece	*ft_lstplast(t_piece *lst);
 t_piece	*ft_lstpbflast(t_piece *lst);
-void	ft_lstpadd_back(t_piece **lst, t_piece *new);
+void ft_lstpadd_front(t_piece **lst, t_piece *new);
+void ft_lstpadd_back(t_piece **lst, t_piece *new);
+int	ft_lstpsize(t_piece *lst);
+int ft_lst_value_min(t_stack *a_stack);
+int ft_lst_value_max(t_stack *a_stack);
+int ft_lst_value_numopmin(t_stack *a_stack);
+void ft_lst_fill_numop(t_stack *a_stack, t_stack *b_stack, int i);
+
+/*MOVES*/
 void ft_moves_swap(t_stack *a, int i);
 void ft_moves_swap_both(t_stack *a, t_stack *b);
 void ft_moves_push(t_stack *a, t_stack *b, int i);
@@ -49,19 +55,34 @@ void ft_moves_rotate(t_stack *a, int i);
 void ft_moves_rev_rotate(t_stack *a, int i);
 void ft_moves_rotate_both(t_stack *a, t_stack *b);
 void ft_moves_rev_rotate_both(t_stack *a, t_stack *b);
-int ft_isnumber(char *str);
-int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack);
-void ft_stack_init_addindex(t_stack *a_stack);
+/*CHECKS*/
 int ft_check_dup(t_stack *a_stack);
+int ft_check_input(char *str);
 int ft_check_issorted(t_stack *a_stack, t_stack *b_stack);
+
+/*UTILS*/
+int ft_nbrmax(int a, int b);
+
+/*SORT*/
 void ft_sort_two(t_stack *a_stack, t_stack *b_stack) ;
 void ft_sort_three(t_stack *a_stack, t_stack *b_stack);
+void ft_sort(t_stack *a_stack, t_stack *b_stack);
+void ft_sort_b_to_a(t_stack *a_stack, t_stack *b_stack);
+void ft_sort_a_to_b(t_stack *a_stack, t_stack *b_stack);
+
+void ft_sort_ra_rrb(t_stack *a_stack, t_stack *b_stack, int ra, int rrb);
+void ft_sort_rb_rra(t_stack *a_stack, t_stack *b_stack, int rb, int rra);
+void ft_sort_ra_rb(t_stack *a_stack, t_stack *b_stack, int ra, int rb);
+void ft_sort_rra_rrb(t_stack *a_stack, t_stack *b_stack, int rra, int rrb);
+
+int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack);
+void ft_stack_init_addindex(t_stack *a_stack);
+
 int ft_count_moves_a(t_stack *a_stack, int nbr);
 int ft_count_moves_b(t_stack *b_stack, int nbr);
-void ft_sort(t_stack *a_stack, t_stack *b_stack);
+int ft_count_moves(t_stack *a_stack, t_stack *b_stack, int nbr, int i);
+
 int ft_find_positon(t_stack *a_stack, int nbr);
-int ft_lst_value_min(t_stack *a_stack);
-int ft_lst_value_max(t_stack *a_stack);
-int ft_lst_value_numopmin(t_stack *a_stack);
+int ft_find_opt_moves(int ra, int rb, int rra, int rrb);
 
 #endif
