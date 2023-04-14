@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:44:34 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/12 21:53:45 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:46:06 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void ft_moves_push(t_stack *a, t_stack *b, int i)
 		a->first = a->first->next;
 		if(a->length == 1)
 			a->last = NULL;
-		ft_lstpadd_front(&b->first,current);
+		ft_lst_add_front(&b->first,current);
 		b->first = current;
-		b->last = ft_lstplast(current);
+		b->last = ft_lst_last(current);
 
 		a->length -= 1;
 		b->length += 1;
@@ -76,7 +76,7 @@ void ft_moves_rotate(t_stack *a, int i)
 		a->last->next = current;
 		a->first = current->next;
 		current->next = NULL;
-		a->last = ft_lstplast(a->first);
+		a->last = ft_lst_last(a->first);
 				
 		if (i == 1)
 			ft_putstr_fd("ra\n",1);
@@ -89,7 +89,7 @@ void ft_moves_rev_rotate(t_stack *a, int i)
 {
 	t_piece *beforelast;
 
-	beforelast = ft_lstpbflast(a->first);
+	beforelast = ft_lst_beforelast(a->first);
 
 	if(a->length > 1)
 	{
@@ -105,18 +105,3 @@ void ft_moves_rev_rotate(t_stack *a, int i)
 			ft_putstr_fd("rrb\n",1);
 	}
 }
-
-void ft_moves_rotate_both(t_stack *a, t_stack *b)
-{
-	ft_moves_rotate(a,0);
-	ft_moves_rotate(b,0);
-	ft_putstr_fd("rr\n",1);
-}
-
-void ft_moves_rev_rotate_both(t_stack *a, t_stack *b)
-{
-	ft_moves_rev_rotate(a,0);
-	ft_moves_rev_rotate(b,0);
-	ft_putstr_fd("rrr\n",1);
-}
-	
