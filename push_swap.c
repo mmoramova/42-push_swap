@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:50:49 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/15 10:55:00 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void ft_sort_b_to_a(t_stack *a_stack, t_stack *b_stack)
 
 void ft_sort(t_stack *a_stack, t_stack *b_stack)
 {
-    if (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
+   if (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
         ft_moves_push(a_stack, b_stack, 2);
-    if (a_stack->length > 3)
+    if (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
         ft_moves_push(a_stack, b_stack, 2);
     while (ft_check_issorted(a_stack,b_stack) != 1 && a_stack->length > 3)
        ft_sort_a_to_b(a_stack, b_stack);
@@ -88,11 +88,13 @@ int main(int argc, char **argv)
 		if(ft_stack_init(argc, argv, &a_stack, &b_stack) == 1)
 		{
 			ft_putstr_fd("Error\n", 1);
-			//free
+            ft_check_free(&a_stack.first); 
+            ft_check_free(&b_stack.first);      
 			return(1);
 		}
-		ft_sort(&a_stack, &b_stack);  
-        //free  
+		ft_sort(&a_stack, &b_stack); 
+        ft_check_free(&a_stack.first); 
+        ft_check_free(&b_stack.first);
 	}
     return(0);
 }

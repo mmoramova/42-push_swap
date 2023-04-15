@@ -6,18 +6,14 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:00:14 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:51:55 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/15 10:54:49 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdarg.h>
+# include <limits.h>
 # include "libft/libft.h"
 
 typedef struct s_piece
@@ -41,7 +37,6 @@ t_piece	*ft_lst_last(t_piece *lst);
 t_piece	*ft_lst_beforelast(t_piece *lst);
 void ft_lst_add_front(t_piece **lst, t_piece *new);
 void ft_lst_add_back(t_piece **lst, t_piece *new);
-
 void ft_lst_fill_numop(t_stack *a_stack, t_stack *b_stack, int i);
 int	ft_lst_size(t_piece *lst);
 int ft_lst_value_min(t_stack *a_stack);
@@ -62,12 +57,14 @@ int ft_moves_count_b(t_stack *b_stack, int nbr);
 
 /* CHECKS */
 int ft_check_dup(t_stack *a_stack);
+void ft_check_free(t_piece **lst);
 int ft_check_input(char *str);
 int ft_check_issorted(t_stack *a_stack, t_stack *b_stack);
 
 /* UTILS */
 int ft_find_positon(t_stack *a_stack, int nbr);
 int ft_find_opt_moves(int ra, int rb, int rra, int rrb);
+void ft_free(t_stack **lst);
 int ft_nbrmax(int a, int b);
 int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack);
 void ft_stack_init_addindex(t_stack *a_stack);

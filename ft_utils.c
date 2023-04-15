@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:47:40 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:49:22 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:17:10 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 	a = NULL;
 	while (i < argc)
 	{
-		if (ft_check_input(argv[i]) == 0)
+		if (ft_check_input(argv[i]) == 1)
 			return(1);
 		current = ft_lst_new(ft_atoi(argv[i++]));
 		ft_lst_add_back(&a, current);
