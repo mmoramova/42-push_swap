@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:08:36 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/16 17:20:41 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:01:54 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,24 @@ int ft_check_issorted(t_stack *a_stack, t_stack *b_stack)
 	return(1);
 }
 
-void	ft_check_free(t_piece **lst)
+void	ft_lst_free(t_piece **a_lst, t_piece **b_lst)
 {
 	t_piece	*tmp;
 
-	if (*lst == NULL)
+	if (*a_lst == NULL || *b_lst == NULL)
 		return ;
-	tmp = *lst;
-	while (*lst != NULL)
+	tmp = *a_lst;
+	while (*a_lst != NULL)
 	{
-		tmp = (*lst)->next;
-		free (*lst);
-		*lst = tmp;
+		tmp = (*a_lst)->next;
+		free (*a_lst);
+		*a_lst = tmp;
+	}
+    tmp = *b_lst;
+	while (*b_lst != NULL)
+	{
+		tmp = (*b_lst)->next;
+		free (*b_lst);
+		*b_lst = tmp;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/15 17:13:38 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:02:47 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,12 @@ int main(int argc, char **argv)
         if (ft_check_dup(&a_stack) == 1)
 		{
 			ft_putstr_fd("Error\n", 1);
-            ft_check_free(&a_stack.first); 
-            ft_check_free(&b_stack.first);      
+            ft_lst_free(&a_stack.first, &b_stack.first);      
 			return(1);
 		}
         ft_stack_init_addindex(&a_stack);
 		ft_sort(&a_stack, &b_stack); 
-        ft_check_free(&a_stack.first); 
-        ft_check_free(&b_stack.first);
+        ft_lst_free(&a_stack.first, &b_stack.first);
 	}
     return(0);
 }
