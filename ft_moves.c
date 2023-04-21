@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:44:34 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:46:06 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/15 16:58:29 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ void ft_moves_swap(t_stack *a, int i)
 	} 
 }
 
-void ft_moves_swap_both(t_stack *a, t_stack *b)
+void ft_moves_swap_both(t_stack *a, t_stack *b, int i)
 {
 	ft_moves_swap(a,0);
 	ft_moves_swap(b,0);
-	ft_putstr_fd("ss\n",1);
+    if (i != 0)
+	    ft_putstr_fd("ss\n",1);
 }
 
 void ft_moves_push(t_stack *a, t_stack *b, int i)

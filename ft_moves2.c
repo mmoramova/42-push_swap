@@ -6,24 +6,26 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:22:45 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:46:35 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:00:34 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_moves_rotate_both(t_stack *a, t_stack *b)
+void ft_moves_rotate_both(t_stack *a, t_stack *b, int i)
 {
 	ft_moves_rotate(a,0);
 	ft_moves_rotate(b,0);
-	ft_putstr_fd("rr\n",1);
+    if (i != 0)
+	    ft_putstr_fd("rr\n",1);
 }
 
-void ft_moves_rev_rotate_both(t_stack *a, t_stack *b)
+void ft_moves_rev_rotate_both(t_stack *a, t_stack *b, int i)
 {
 	ft_moves_rev_rotate(a,0);
 	ft_moves_rev_rotate(b,0);
-	ft_putstr_fd("rrr\n",1);
+    if (i != 0)
+	    ft_putstr_fd("rrr\n",1);
 }
 	
 int ft_moves_count_a(t_stack *a_stack, int nbr)

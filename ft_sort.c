@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:37:12 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:42:21 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:01:36 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void ft_sort_ra_rb(t_stack *a_stack, t_stack *b_stack, int ra, int rb)
     {
         while(rb-- > 0)
         {
-            ft_moves_rotate_both(a_stack, b_stack);
+            ft_moves_rotate_both(a_stack, b_stack, 1);
             ra--;
         }
         while(ra-- > 0)
@@ -45,7 +45,7 @@ void ft_sort_ra_rb(t_stack *a_stack, t_stack *b_stack, int ra, int rb)
     {
         while(ra-- > 0)
         {
-            ft_moves_rotate_both(a_stack, b_stack);
+            ft_moves_rotate_both(a_stack, b_stack, 1);
             rb--;
         }
         while(rb-- > 0)
@@ -59,7 +59,7 @@ void ft_sort_rra_rrb(t_stack *a_stack, t_stack *b_stack, int rra, int rrb)
     {
         while(rrb-- > 0)
         {
-            ft_moves_rev_rotate_both(a_stack, b_stack);
+            ft_moves_rev_rotate_both(a_stack, b_stack, 1);
             rra--;
         }
         while(rra-- > 0)
@@ -69,7 +69,7 @@ void ft_sort_rra_rrb(t_stack *a_stack, t_stack *b_stack, int rra, int rrb)
     {
         while(rra-- > 0)
         {
-            ft_moves_rev_rotate_both(a_stack, b_stack);
+            ft_moves_rev_rotate_both(a_stack, b_stack, 1);
             rrb--;
         }
         while(rrb-- > 0)

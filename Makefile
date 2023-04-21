@@ -6,7 +6,7 @@
 #    By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 21:02:36 by mmoramov          #+#    #+#              #
-#    Updated: 2023/04/15 13:14:20 by mmoramov         ###   ########.fr        #
+#    Updated: 2023/04/15 13:20:45 by mmoramov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,15 +42,9 @@ DEP_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.d)
 DEP = $(SRC:.c=.d)
 DEP_BONUS = $(SRC_CHECKER:.c=.d)
 
-#OBJ = $(SRC:.c=.o)
-#OBJ_BONUS = $(SRC_BONUS:.c=.o)
-
-#DEP = $(SRC:.c=.d)
-#DEP_BONUS = $(SRC_BONUS:.c=.d)
-
 all: make_libs $(NAME)
 
-make_libs:
+make_libs: #TODO NOT WORKING FOR BONUS
 	@$(MAKE_LIBFT)
 
 -include ${DEP_PUSH_SWAP} ${DEP} 

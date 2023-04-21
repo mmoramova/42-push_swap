@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:47:40 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 19:17:10 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/16 17:51:50 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 	while (i < argc)
 	{
 		if (ft_check_input(argv[i]) == 1)
-			return(1);
+        {
+			ft_lst_del_piece(a);
+            return(1);
+        }
 		current = ft_lst_new(ft_atoi(argv[i++]));
 		ft_lst_add_back(&a, current);
 	}
@@ -96,8 +99,5 @@ int ft_stack_init(int argc, char **argv, t_stack *a_stack, t_stack *b_stack)
 	b_stack -> first = NULL;
 	b_stack -> last = NULL;
 	b_stack -> length = 0;
-    if (ft_check_dup(a_stack) == 1)
-        return(1);
-    ft_stack_init_addindex(a_stack);
     return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:08:36 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/15 10:54:58 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/16 17:20:41 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int ft_check_input(char *str)
 	}
     if (str[0] == '-')
         nbr *= -1;
-     if (nbr < INT_MIN || nbr > INT_MAX)
+     if (nbr < INT_MIN || nbr > INT_MAX || i == 0)
         return(1);
 	return(0);
 }

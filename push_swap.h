@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:00:14 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/15 10:54:49 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/16 17:51:34 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int ft_lst_value_numopmin(t_stack *a_stack);
 
 /* MOVES */
 void ft_moves_swap(t_stack *a, int i);
-void ft_moves_swap_both(t_stack *a, t_stack *b);
+void ft_moves_swap_both(t_stack *a, t_stack *b, int i);
 void ft_moves_push(t_stack *a, t_stack *b, int i);
 void ft_moves_rotate(t_stack *a, int i);
 void ft_moves_rev_rotate(t_stack *a, int i);
-void ft_moves_rotate_both(t_stack *a, t_stack *b);
-void ft_moves_rev_rotate_both(t_stack *a, t_stack *b);
+void ft_moves_rotate_both(t_stack *a, t_stack *b, int i);
+void ft_moves_rev_rotate_both(t_stack *a, t_stack *b, int i);
 int ft_moves_count(t_stack *a_stack, t_stack *b_stack, int nbr, int i);
 int ft_moves_count_a(t_stack *a_stack, int nbr);
 int ft_moves_count_b(t_stack *b_stack, int nbr);
@@ -80,4 +80,5 @@ void ft_sort_rb_rra(t_stack *a_stack, t_stack *b_stack, int rb, int rra);
 void ft_sort_ra_rb(t_stack *a_stack, t_stack *b_stack, int ra, int rb);
 void ft_sort_rra_rrb(t_stack *a_stack, t_stack *b_stack, int rra, int rrb);
 
+void	ft_lst_del_piece(t_piece *lst);
 #endif
