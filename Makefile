@@ -6,7 +6,7 @@
 #    By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 21:02:36 by mmoramov          #+#    #+#              #
-#    Updated: 2023/04/15 13:20:45 by mmoramov         ###   ########.fr        #
+#    Updated: 2023/04/22 22:10:05 by mmoramov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,23 +31,23 @@ WHITE = \033[0;97m
 
 SRC_PUSH_SWAP = push_swap.c
 SRC_CHECKER = checker.c
-SRC_FILES = ft_lst ft_lst2 ft_moves ft_moves2 ft_checks ft_sort ft_utils
+SRC_FILES = ft_lst ft_lst2 ft_lst3 ft_moves ft_moves2 ft_checks ft_sort ft_utils ft_checker_do
 SRC = $(addsuffix .c, $(SRC_FILES))
 
 OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
 OBJ = $(SRC:.c=.o)
-OBJ_BONUS = $(SRC_CHECKER:.c=.o) 
+OBJ_BONUS = $(SRC_CHECKER:.c=.o)
 
-DEP_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.d) 
+DEP_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.d)
 DEP = $(SRC:.c=.d)
 DEP_BONUS = $(SRC_CHECKER:.c=.d)
 
 all: make_libs $(NAME)
 
-make_libs: #TODO NOT WORKING FOR BONUS
+make_libs:
 	@$(MAKE_LIBFT)
 
--include ${DEP_PUSH_SWAP} ${DEP} 
+-include ${DEP_PUSH_SWAP} ${DEP}
 
 %.o: %.c
 	$(CC) $(C_FLAGS) -c $< -o $@

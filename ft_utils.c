@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:47:40 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/22 21:02:27 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 21:24:09 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ int	ft_stack_init(char **argv, t_stack *a, t_stack *b)
 	b -> last = NULL;
 	b -> len = 0;
 	ft_stack_init_addindex(a);
+	if (ft_check_dup(a, b) == 1)
+		return(1);
 	return(0);
 }

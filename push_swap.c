@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/22 20:58:26 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 21:24:12 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,6 @@ int	main(int argc, char **argv)
 	if	(argc > 1)
 	{
 		if (ft_stack_init(argv, &a, &b) == 1)
-		{
-			ft_putstr_fd("Error\n", 1);
-			return(1);
-		}
-		if (ft_check_dup(&a, &b) == 1)
 		{
 			ft_putstr_fd("Error\n", 1);
 			return(1);

@@ -6,12 +6,11 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:37:12 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/22 20:58:12 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 21:08:39 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	ft_sort_ra_rrb(t_stack *a, t_stack *b, int ra, int rrb)
 {

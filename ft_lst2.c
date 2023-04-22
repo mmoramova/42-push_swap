@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:19:51 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/22 21:00:49 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 21:06:30 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,5 @@ void	ft_lst_fill_numop(t_stack *a, t_stack *b, int i)
 	{
 		ap->numop = ft_moves_count(a,b,ap -> index, i) + 1;
 		ap = ap -> next;
-	}
-}
-
-void	ft_lst_del_piece(t_piece *lst)
-{
-	t_piece	*a;
-	t_piece	*current;
-
-	a = lst;
-	current = lst;
-	while (a)
-	{
-		current = a;
-		a = current -> next;
-		free(current);
 	}
 }
