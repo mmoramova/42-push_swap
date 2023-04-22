@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:42:43 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/14 18:20:48 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/22 20:57:56 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_piece	*ft_lst_new(int value)
 	if (!lst)
 		return (NULL);
 	lst -> value = value;
-	lst -> index = 0; 
-    lst -> numop = 0;
+	lst -> index = 0;
+	lst -> numop = 0;
 	lst -> next = NULL;
 	return (lst);
 }
