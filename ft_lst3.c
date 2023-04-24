@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 21:05:35 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/22 21:26:17 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:46:40 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	ft_lst_free(t_piece **a_lst, t_piece **b_lst)
 	tmp = *a_lst;
 	while (*a_lst != NULL)
 	{
-		tmp = (*a_lst) -> next;
-		free (*a_lst);
+		tmp = (*a_lst)-> next;
+		free(*a_lst);
 		*a_lst = tmp;
 	}
 	tmp = *b_lst;
 	while (*b_lst != NULL)
 	{
-		tmp = (*b_lst) -> next;
-		free (*b_lst);
+		tmp = (*b_lst)-> next;
+		free(*b_lst);
 		*b_lst = tmp;
 	}
 }
@@ -45,6 +45,6 @@ void	ft_lst_del_piece(t_piece *lst)
 	{
 		current = a;
 		a = current -> next;
-		free(current);
+		free (current);
 	}
 }
