@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 21:02:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/24 17:32:09 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:06:32 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ void	ft_sort_b_to_a(t_stack *a, t_stack *b)
 
 void	ft_sort(t_stack *a, t_stack *b)
 {
-	if (ft_check_issorted(a, b) != 1 && a -> len > 3)
+	if (!ft_check_issorted(a, b) && a -> len > 3)
 		ft_moves_push(a, b, 2);
-	if (ft_check_issorted(a, b) != 1 && a -> len > 3)
+	if (!ft_check_issorted(a, b) && a -> len > 3)
 		ft_moves_push(a, b, 2);
-	while (ft_check_issorted(a, b) != 1 && a -> len > 3)
+	while (!ft_check_issorted(a, b) && a -> len > 3)
 		ft_sort_a_to_b(a, b);
 	if (a -> len == 3)
 		ft_sort_three(a, b);
-	while (ft_check_issorted(a, b) != 1 && b -> len != 0)
+	while (!ft_check_issorted(a, b) && b -> len != 0)
 		ft_sort_b_to_a(a, b);
-	while (ft_check_issorted(a, b) != 1)
+	while (!ft_check_issorted(a, b))
 	{
 		if (ft_find_positon(a, ft_lst_value_min(a)) < a -> len / 2)
 			ft_moves_rotate(a, 1);
@@ -82,7 +82,7 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		if (ft_stack_init(argv, &a, &b) == 1)
+		if (ft_stack_init(argv, &a, &b))
 		{
 			ft_putstr_fd("Error\n", 1);
 			return (1);

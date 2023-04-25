@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 22:05:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/24 17:27:46 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:03:58 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int	ft_checker_do_instructions(t_stack *a, t_stack *b, char *txt)
 	while (txt[0])
 	{
 		if (ft_do_rrotate(a, b, txt))
-			txt++;
-		else if (!ft_do_swap_push(a, b, txt) && !ft_do_rotate(a, b, txt))
+			txt = txt + 4;
+		else if (ft_do_swap_push(a, b, txt) || ft_do_rotate(a, b, txt))
+			txt = txt + 3;
+		else
 		{
-			ft_gnl_free(&txt);
 			ft_lst_free(&a -> first, &b -> first);
 			ft_putstr_fd("Error\n", 1);
 			return (1);
 		}
-		txt = txt + 3;
 	}
 	return (0);
 }

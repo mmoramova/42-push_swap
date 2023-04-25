@@ -6,7 +6,7 @@
 #    By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 21:02:36 by mmoramov          #+#    #+#              #
-#    Updated: 2023/04/22 22:10:05 by mmoramov         ###   ########.fr        #
+#    Updated: 2023/04/25 17:24:15 by mmoramov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,12 +61,14 @@ $(NAME)::
 
 -include ${DEP_BONUS}
 
-bonus:: $(OBJ) $(OBJ_BONUS) ./$(SRC_LIBFT)
+bonus: make_libs bonusChecker
+
+bonusChecker:: $(OBJ) $(OBJ_BONUS) ./$(SRC_LIBFT)
 	touch $@
 	$(CC) $(C_FLAGS) $(^) -o $(NAME_BONUS)
 	@echo "$(GREEN)Everything has been compilated.$(BLACK)"
 
-bonus::
+bonusChecker::
 	@echo "$(GREEN)No actions needed.$(BLACK)"
 
 
@@ -77,7 +79,7 @@ clean:
 	$(MAKE_LIBFT) clean
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS) bonus
+	$(RM) $(NAME) $(NAME_BONUS) bonusChecker
 	$(MAKE_LIBFT) fclean
 	@echo "$(MAGENTA)Everything has been cleaned.$(BLACK)"
 
