@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 12:37:12 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/25 17:05:50 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:14:30 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 	{
 		if (ft_stack_init(argv, &a, &b))
 		{
-			ft_putstr_fd("Error\n", 1);
+			ft_putstr_fd("Error\n", 2);
 			return (1);
 		}
 		txt = ft_checker_read_input();

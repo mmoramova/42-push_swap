@@ -6,7 +6,7 @@
 #    By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 21:02:36 by mmoramov          #+#    #+#              #
-#    Updated: 2023/04/25 17:24:15 by mmoramov         ###   ########.fr        #
+#    Updated: 2023/04/26 17:28:01 by mmoramov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER = push_swap.h
 C_FLAGS = -Wall -Wextra -Werror -MMD
 RM = rm -f
 SRC_LIBFT = libft/libft.a
-MAKE_LIBFT = make -C libft
+MAKE_LIBFT = make -C libft --no-print-directory
 
 # Colors
 BLACK = \033[0;39m

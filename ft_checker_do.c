@@ -6,7 +6,7 @@
 /*   By: mmoramov <mmoramov@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 22:05:59 by mmoramov          #+#    #+#             */
-/*   Updated: 2023/04/25 17:03:58 by mmoramov         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:14:18 by mmoramov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	ft_do_swap_push(t_stack *a, t_stack *b, char *txt)
 {
-	if (!ft_strncmp(txt, "sa\n", 3) && a->len > 0)
+	if (!ft_strncmp(txt, "sa\n", 3) && a->len > 1)
 		ft_moves_swap(a, 0);
-	else if (!ft_strncmp(txt, "sb\n", 3) && b->len > 0)
+	else if (!ft_strncmp(txt, "sb\n", 3) && b->len > 1)
 		ft_moves_swap(b, 0);
-	else if (!ft_strncmp(txt, "ss\n", 3) && a->len > 0 && b->len > 0)
+	else if (!ft_strncmp(txt, "ss\n", 3) && a->len > 1 && b->len > 1)
 		ft_moves_swap_both(a, b, 0);
 	else if (!ft_strncmp(txt, "pa\n", 3) && b->len > 0)
 		ft_moves_push(b, a, 0);
@@ -57,7 +57,7 @@ int	ft_do_rotate(t_stack *a, t_stack *b, char *txt)
 
 int	ft_checker_do_instructions(t_stack *a, t_stack *b, char *txt)
 {
-	while (txt[0])
+	while (txt && txt[0])
 	{
 		if (ft_do_rrotate(a, b, txt))
 			txt = txt + 4;
@@ -66,7 +66,7 @@ int	ft_checker_do_instructions(t_stack *a, t_stack *b, char *txt)
 		else
 		{
 			ft_lst_free(&a -> first, &b -> first);
-			ft_putstr_fd("Error\n", 1);
+			ft_putstr_fd("Error\n", 2);
 			return (1);
 		}
 	}
